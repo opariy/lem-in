@@ -40,44 +40,22 @@ int		check_end(t_request *request)
 char	**read_from_output(void)
 {
 	char	*line;
-	char	*input_str;
+	size_t	i;
 	char	**map;
-	char	*tmp;
 
-	input_str = ft_strnew(0);
+	map = (char**)malloc(sizeof(char*) * 10000000 + 1);
 	line = ft_strnew(0);
-	tmp = NULL;
-	int fd = open("map1.txt", O_RDONLY);
-	while (get_next_line(fd, &line, ft_strnew(0)) > 0)
-//	while (get_next_line(0, &line, ft_strnew(0)) > 0)
+	i = 0;
+	while (get_next_line(0, &line, ft_strnew(0)) > 0)
 	{
-//		printf("now here\n");
-		if (strcmp(line, "") == 0)
-		{
-//			ft_memdel((void **)&line);
-//			while (1);
-			stop_validation();
-		}
-		tmp = input_str;
-		input_str = ft_strjoin(tmp, line);
-		ft_memdel((void **)&tmp);
-		tmp = input_str;
-		input_str = ft_strjoin(tmp, "\n");
-		ft_memdel((void **)&tmp);
+		map[i] = ft_strdup(line);
 		ft_memdel((void **)&line);
 
 	}
-//	while (1);
-//	printf("here we go\n");
-	ft_memdel((void **)&tmp);
 	ft_memdel((void **)&line);
+	map[i] = NULL;
 	if (ft_strcmp(input_str, "") == 0)
-	{
-		while (1);
 		stop_validation();
-	}
-	map = ft_strsplit(input_str, '\n');
-	ft_memdel((void **)&input_str);
 	return (map);
 }
 
